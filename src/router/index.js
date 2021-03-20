@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
+import Error from '../views/Error.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -8,7 +11,20 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta:{
+      autenticado:true
+    }
+  },
+  {
+    path: '/login',
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: '/*',
+    name: "Error",
+    component: Error,
   },
   {
     path: '/about',
@@ -24,6 +40,22 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to,from,next)=>{
+  let user = store.state.token;
+  console.log(to)
+  let private_rute = to.matched.some(record=> record.meta.autenticado)
+
+  if(private_rute && !user){
+    next('/login')
+  }
+  else if(!private_rute && user){
+    next('/')
+  }
+  else{
+    next();
+  }
 })
 
 export default router
