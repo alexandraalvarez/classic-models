@@ -40,13 +40,8 @@ export default {
       let atrasadas = this.atrasadas;
       let total = atrasadas + totales;
 
-      console.log(totales);
-      console.log(total);
-      
       if(total>0){
         resultado = ( atrasadas * 100) / totales;
-        
-        console.log(resultado);
       }
       return resultado.toFixed(0);
       
@@ -57,9 +52,8 @@ export default {
     fetchOrdenes(){
       axios.get('http://localhost:8080/api/kpis.json')
         .then(resp=>{
-          console.log(resp.data[1]);
+          
           let atraso = resp.data[1];
-          console.log(atraso.totales);
           this.totales = atraso.totales;
           this.atrasadas = atraso.atrasadas;
         })

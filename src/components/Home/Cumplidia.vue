@@ -43,7 +43,6 @@ export default {
       if(total>0){
         resultado = ( entregadas * 100) / total;
         
-        console.log(resultado);
       }
       return resultado.toFixed(0);
       
@@ -56,7 +55,7 @@ export default {
         .then(resp=>{
           
           let cumplo = resp.data[0];
-          console.log(cumplo.entregadas);
+          
           this.entregadas = cumplo.entregadas;
           this.pendientes = cumplo.pendientes;
         })
